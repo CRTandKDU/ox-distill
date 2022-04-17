@@ -1,0 +1,34 @@
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+#+OPTIONS: html-style:nil
+
+#+begin_export html
+<style>
+
+h2, .blue {
+  color:blue;
+  }
+</style>
+#+end_export
+
+* Author Contributions
+
+    This article grew out of a document that Chris Olah wrote in order to act as an explanation for our techniques for visualizing weights.
+
+    
+      *Research.* The necessity of visualizing weights is a problem we encounter frequently, and our techniques have been refined across many investigations of features and circuits, so it is difficult to fully separate out all contributions towards improving those techniques.
+    
+* Research
+    
+      Many people “test drove” these visualization methods, and a lot of our practical knowledge of using them to study circuits came from that.
+
+      For example, the curve detector examples used in /Small Multiples/ are due to Nick Cammarata’s work investigating curve detectors. Gabe Goh performed experiments that moved /Visualizing Spatial Position Weights/ forward. The high-low frequency detector example and NMF factors used in /Visualizing Weight Factors/ are due to experiments performed by Ludwig Schubert, and the weight banding examples in /Aside: One Simple Trick/ are due to experiments run by Michael Petrov.
+    
+
+    
+      *Writing and Diagrams.* Chris wrote the article and developed the designs for its original figures. Chelsea Voss ported the article to Distill, upgraded the diagrams for the new format, edited some text, and developed Figure 12, and Chris provided feedback and guidance throughout.
+    
+
+    
+      *Code.* Chris authored the Tensorflow (Lucid) notebook, and Ben Egan and Swee Kiat Lim authored the PyTorch (Captum) notebook.
+    
