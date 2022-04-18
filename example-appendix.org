@@ -5,7 +5,7 @@
 #+begin_export html
 <style>
 
-h2, .blue {
+dt-appendix h2, .blue {
   color:blue;
   }
 </style>
