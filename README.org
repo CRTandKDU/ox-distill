@@ -1,0 +1,91 @@
+#+TITLE: ox-distill
+#+AUTHOR: jmc
+#+EMAIL: jmc@neurondata.org
+
+* Introduction
+~ox-distill~ is an export backend for ~org-mode~ to create interactive explanatory articles using the [[https://distill.pub/guide/][Distill web framework]].
+
+With the usual caveat: It's still a work-in-progress, but it works well right now.
+
+* Installation and Usage
+~ox-distill~ isn't on MELPA yet, so the ~ox-distill.el~ file has to be simply copied to a directory where Emacs can find it. (The ~site-lisp~ directory is a good place, for instance.)
+
+In your initialization file, then add:
+
+#+BEGIN_SRC emacs-lisp
+(require 'ox-distill)
+#+END_SRC
+
+or interactively before exporting you ~.org~ source file, invoke ~M-x eval-expression~ followed by ~(require 'ox-distill)~ at the ~Eval:~ prompt.
+
+* Features
+~ox-distill~ supports Distill style for front-matter, citations, footnotes and appendix but relies on the ~html~ backend, from which it is derived, for code blocks.
+
+** Front-Matter
+The Distill front-matter is built from the following ~org-mode~ keywords at the top of your ~.org~ source file:
+
+    - ~#+TITLE:~ The title of the article
+    - ~#+SUBTITLE:~ An optional subtitle
+    - ~#+AUTHOR:~ A list of authors separated by a comma (~,~) with no space after the comma
+    - ~#+EMAIL:~ A list of ~mailto:~ email addresses for authors, separated by commas, in the same order as above
+    - ~#+DISTILL_AFFILIATION:~ A list of affiliation (strings) for authors, separated by commas, in the same order as above
+    - ~#+DISTILL_AFFILIATION_URL:~ A list of affiliations URLs for authors, separated by commas, in the same order as above
+
+** Citations
+The bibliography for an article is a standard ~bibtex~ file (e.g. see [[http://www.bibtex.org/][bibtex]]). The ~bibtex~ file to be used for publishing an article is set with the following keyword:
+
+    - ~#+DISTILL_BIBFILE: example.bib~ with the name or URL of the ~bibtex~ file
+
+In the body of the article, there are several ways a citation may be inserted:
+
+    - As a link with special keyword ~dtcite:~ as in: ~dtcite:VANEMDEBOAS1989103~, where the reference in the bibliography file appears right after the special keyword
+    - As a classical ~org-mode~ link with the syntax:
+      #+BEGIN_EXAMPLE
+      [[dtcite:][VANEMDEBOAS1989103]]
+      #+END_EXAMPLE
+    - As an HTML escape sequence using the Distill ~dt-cite~ element:
+      #+begin_example
+      @@html:<dt-cite key="VANEMDEBOAS1989103">@@ @@html:</dt-cite>@@
+      #+end_example
+
+whichever is more convenient.
+
+** Footnotes
+~org-mode~ offers a [[https://orgmode.org/manual/Creating-Footnotes.html][comprehensive markup for footnotes]] which can be used with ~ox-distill~. The footnotes appear as usual at the bottom of the document.
+
+~ox-distill~ adds a new markup for /interactive/ footnotes in the Distill style. Such interactive footnotes may be inserted in the body of the text in several ways:
+    - As a classical ~org-mode~ link with the syntax:
+      #+BEGIN_EXAMPLE
+      [[dtfn:][The /full/ text of the footnote, including org-mode markup.]]
+      #+END_EXAMPLE
+    - As an HTML escape sequence using the Distill ~dt-fn~ element:
+      #+begin_example
+      @@html:<dt-fn>@@The /full/ text of the footnote, including org-mode markup@@html:</dt-fn>@@
+      #+end_example
+
+whichever is more convenient.
+
+** Appendix
+An optional appendix may be added at the bottom of the document. As offered in the Distill guide, you may wish to include the following sections in your appendix:
+  - Acknowledgments: This is a place to recognize people and institutions. It may also be a good place to acknowledge and cite software that makes your work possible (eg. TensorFlow, OpenAI Gym).
+  - Author Contributions: We strongly encourage you to include an author contributions statement briefly describing what each author did.
+
+The appendix is a separate ~org-mode~ file, with the recommended (but optional) settings at the top:
+#+begin_example
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+#+OPTIONS: html-style:nil
+#+end_example
+
+The main article source file indicates the name of the appendix file with the keyword ~#+DISTILL_APPENDIX:~ as in:
+#+begin_example
+#+DISTILL_APPENDIX: example-appendix.org
+#+end_example
+
+* Customizations
+~ox-distill~ is derived from ~ox-html~ and all the latter custom variables can be customized for the former, through the ~M-x customize~ usual interface.
+
+* References
+[[https://distill.pub/][Distill]]
+
+
