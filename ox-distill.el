@@ -86,17 +86,18 @@
     )
   )
 
+
 ;; Overwrites 'html custom variables (?)
-(custom-set-variables
- '(org-html-head-include-default-style nil)
- '(org-html-head "")
- '(org-html-divs
-   '((preamble "div" "preamble")
-    (content "dt-article" "content")
-    (postamble "div" "postamble")))
- '(org-html-postamble nil)
- '(org-html-preamble nil)
- )
+;; (custom-set-variables
+;;  '(org-html-head-include-default-style nil)
+;;  '(org-html-head "")
+;;  '(org-html-divs
+;;    '((preamble "div" "preamble")
+;;     (content "dt-article" "content")
+;;     (postamble "div" "postamble")))
+;;  '(org-html-postamble nil)
+;;  '(org-html-preamble nil)
+;;  )
 
 ;; Derive backend
 (org-export-define-derived-backend 'distill 'html
@@ -346,9 +347,19 @@ Export is done in a buffer named \"*Org Distill-HTML Export*\", which
 will be displayed when `org-export-show-temporary-export-buffer'
 is non-nil."
   (interactive)
-  (org-export-to-buffer 'distill "*Org Distill-HTML Export*"
-    async subtreep visible-only body-only ext-plist
-    (lambda () (set-auto-mode t))))
+  (let ((org-html-head-include-default-style nil)
+	(org-html-head "")
+	(org-html-divs
+	 '((preamble "div" "preamble")
+	   (content "dt-article" "content")
+	   (postamble "div" "postamble")))
+	(org-html-postamble nil)
+	(org-html-preamble nil))
+    (org-export-to-buffer 'distill "*Org Distill-HTML Export*"
+      async subtreep visible-only body-only ext-plist
+      (lambda () (set-auto-mode t)))
+    )
+  )
 
 ;;;###autoload
 (defun org-distill-export-to-html
@@ -380,13 +391,21 @@ file-local settings.
 
 Return output file's name."
   (interactive)
-  (let* ((extension (concat
-		     (when (> (length org-html-extension) 0) ".")
-		     (or (plist-get ext-plist :html-extension)
-			 org-html-extension
-			 "html")))
-	 (file (org-export-output-file-name extension subtreep))
-	 (org-export-coding-system org-html-coding-system))
+  (let* ((org-html-head-include-default-style nil)
+	(org-html-head "")
+	(org-html-divs
+	 '((preamble "div" "preamble")
+	   (content "dt-article" "content")
+	   (postamble "div" "postamble")))
+	(org-html-postamble nil)
+	(org-html-preamble nil)
+	(extension (concat
+		    (when (> (length org-html-extension) 0) ".")
+		    (or (plist-get ext-plist :html-extension)
+			org-html-extension
+			"html")))
+	(file (org-export-output-file-name extension subtreep))
+	(org-export-coding-system org-html-coding-system))
     (org-export-to-file 'distill file
       async subtreep visible-only body-only ext-plist)))
 
