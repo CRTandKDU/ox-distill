@@ -26,7 +26,7 @@ The Distill front-matter is built from the following ~org-mode~ keywords at the 
 
     - ~#+TITLE:~ The title of the article
     - ~#+SUBTITLE:~ An optional subtitle
-    - ~#+AUTHOR:~ A list of authors separated by a comma (~,~) with no space after the comma
+    - ~#+AUTHOR:~ A list of authors separated by a comma (",") with no space after the comma
     - ~#+EMAIL:~ A list of ~mailto:~ email addresses for authors, separated by commas, in the same order as above
     - ~#+DISTILL_AFFILIATION:~ A list of affiliation (strings) for authors, separated by commas, in the same order as above
     - ~#+DISTILL_AFFILIATION_URL:~ A list of affiliations URLs for authors, separated by commas, in the same order as above
